@@ -37,13 +37,23 @@ export const TodayTradeCard = () => {
 
 
     useEffect(() => {
-        setLoading(true)
-        GetHouseData(currCityNumber, todayDate).then((response) => {
-            setHouseData(response)
-            setLoading(false)
-        }).catch((err) => {
-            console.log(err)
-        })
+        if (todayDate) {
+            setLoading(true)
+            GetHouseData(currCityNumber, todayDate).then((response) => {
+                setHouseData(response)
+                setLoading(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            setLoading(true)
+            GetHouseData(currCityNumber, "202407").then((response) => {
+                setHouseData(response)
+                setLoading(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }, [currCityNumber])
 
 
