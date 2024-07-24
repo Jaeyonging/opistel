@@ -24,6 +24,7 @@ export const TodayTradeCard = () => {
     const [houseData, setHouseData] = useState<HouseData[]>([])
     const [currCityNumber, setCurrCityNumber] = useState("11680")
     const [isLoading, setLoading] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         setLoading(true)
@@ -36,6 +37,12 @@ export const TodayTradeCard = () => {
     }, [currCityNumber])
 
     const today = new Date()
+
+    const filteredHouseData = houseData.filter(item =>
+        `${item.umdNm} ${item.jibun} ${item.offiNm}오피스텔 ${item.floor}층`
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className='flex flex-col bg-[#f9f9f9] text-[20px] text-center'>
@@ -51,10 +58,17 @@ export const TodayTradeCard = () => {
                     />
                 ))}
             </div>
+            <input
+                type="text"
+                placeholder="주소 검색"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className='p-2 m-2 border rounded'
+            />
             {isLoading ? <div>Loading...</div> :
-                houseData.length > 0 ? (
+                filteredHouseData.length > 0 ? (
                     <div className='flex flex-col text-start'>
-                        {houseData.map((item, index) => (
+                        {filteredHouseData.map((item, index) => (
                             <div key={index} className=' flex flex-col text-[black] rounded-[20px]  bg-[#c1c0c0] p-2 m-2 sm:text-[15px]'>
                                 <p>주소: {item.umdNm} {item.jibun} <b className='sm:text-[red]'>{item.offiNm}오피스텔</b> {item.floor}층</p>
                                 <p>평수: {calculateSize(item.excluUseAr)}평</p>
