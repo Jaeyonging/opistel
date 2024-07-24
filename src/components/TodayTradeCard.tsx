@@ -70,7 +70,7 @@ export const TodayTradeCard = () => {
                     <div className='flex flex-col text-start'>
                         {filteredHouseData.map((item, index) => (
                             <div key={index} className=' flex flex-col text-[black] rounded-[20px]  bg-[#c1c0c0] p-2 m-2 sm:text-[15px]'>
-                                <p>주소: {item.umdNm} {item.jibun} <b className='sm:text-[red]'>{item.offiNm}오피스텔</b> {item.floor}층</p>
+                                <p>주소: {item.umdNm} {item.jibun} <b className='text-[red]'>{item.offiNm}오피스텔</b> {item.floor}층</p>
                                 <p>평수: {calculateSize(item.excluUseAr)}평</p>
                                 <p>보증금: {calculatePrice(item.deposit)}</p>
                                 <p>월세: {item.monthlyRent ? item.monthlyRent + "만원" : "전세"}</p>
