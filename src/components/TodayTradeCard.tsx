@@ -25,10 +25,20 @@ export const TodayTradeCard = () => {
     const [currCityNumber, setCurrCityNumber] = useState("11680")
     const [isLoading, setLoading] = useState(false)
     const [searchQuery, setSearchQuery] = useState("");
+    const [todayDate, setTodayDate] = useState("")
+    const today = new Date()
+
+    useEffect(() => {
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+        setTodayDate(today.getFullYear() + formattedMonth);
+    }, []);
+
 
     useEffect(() => {
         setLoading(true)
-        GetHouseData(currCityNumber, "202406").then((response) => {
+        GetHouseData(currCityNumber, todayDate).then((response) => {
             setHouseData(response)
             setLoading(false)
         }).catch((err) => {
@@ -36,7 +46,6 @@ export const TodayTradeCard = () => {
         })
     }, [currCityNumber])
 
-    const today = new Date()
 
     const filteredHouseData = houseData.filter(item =>
         `${item.umdNm} ${item.jibun} ${item.offiNm}오피스텔 ${item.floor}층`
