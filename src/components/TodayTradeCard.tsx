@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { LocationButton } from './LocationButton'
-import { GetHouseData, GetHouseMonthData } from '../api'
+import { GetHouseData } from '../api'
 import { calculatePrice, calculateSize, SeoulLocationToNumber } from '../types/types';
 
 interface HouseData {
