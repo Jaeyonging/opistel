@@ -35,7 +35,6 @@ export const TodayTradeCard = () => {
         setTodayDate(today.getFullYear() + formattedMonth);
     }, []);
 
-
     useEffect(() => {
         if (todayDate) {
             setLoading(true)
