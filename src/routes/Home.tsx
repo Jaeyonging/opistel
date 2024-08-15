@@ -4,6 +4,7 @@ import axios from 'axios'
 import { TodayTradeCard } from '../components/TodayTradeCard'
 import { Menu } from '../components/Menu'
 import { ToTop } from '../components/ToTop'
+import { Footer } from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
 
 export const Home = () => {
@@ -16,6 +17,7 @@ export const Home = () => {
         <TodayTradeCard />
       </div>
       <ToTop />
+      <Footer></Footer>
     </>
   )
 }
