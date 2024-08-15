@@ -32,28 +32,26 @@ export const TodayTradeCard = () => {
     const [currCityNumber, setCurrCityNumber] = useState("11680");
     const [isLoading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const [todayDate, setTodayDate] = useState("");
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
     const [selectedRegion, setSelectedRegion] = useState("서울");
-    const today = new Date();
+
+    const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
+    const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
     useEffect(() => {
-        const today = new Date();
-        const formattedMonth = String(today.getMonth() + 1).padStart(2, '0');
-        setTodayDate(`${today.getFullYear()}${formattedMonth}`);
-    }, []);
+        const formattedMonth = String(selectedMonth).padStart(2, '0');
+        const formattedDate = `${selectedYear}${formattedMonth}`;
 
-    useEffect(() => {
-        if (todayDate) {
-            setLoading(true);
-            GetHouseData(currCityNumber, todayDate).then((response) => {
-                setHouseData(response);
-                setLoading(false);
-            }).catch((err) => {
-                console.log(err);
-                setLoading(false);
-            });
-        }
-    }, [currCityNumber, todayDate]);
+        setLoading(true);
+        GetHouseData(currCityNumber, formattedDate).then((response) => {
+            setHouseData(response);
+            setLoading(false);
+        }).catch((err) => {
+            console.log(err);
+            setLoading(false);
+        });
+    }, [currCityNumber, selectedYear, selectedMonth]);
 
     const getLocationList = (region: string) => {
         switch (region) {
@@ -102,7 +100,27 @@ export const TodayTradeCard = () => {
 
     return (
         <div className='flex flex-col bg-[#f9f9f9] text-[20px] text-center'>
-            이번 {today.getMonth() + 1}월 달의 실거래
+            {selectedYear}년도 {selectedMonth}월 달의 실거래
+            <div className='flex justify-center my-4'>
+                <select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                    className='p-2 m-2 border rounded'
+                >
+                    {years.map((year) => (
+                        <option key={year} value={year}>{year}년</option>
+                    ))}
+                </select>
+                <select
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+                    className='p-2 m-2 border rounded'
+                >
+                    {months.map((month) => (
+                        <option key={month} value={month}>{month}월</option>
+                    ))}
+                </select>
+            </div>
             <div className='flex justify-center my-4 overflow-auto'>
                 {renderRegionButtons()}
             </div>
