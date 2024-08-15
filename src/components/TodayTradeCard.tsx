@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { LocationButton } from './LocationButton'
 import { GetHouseData } from '../api'
-import { calculatePrice, calculateSize, SeoulLocationToNumber } from '../types/types';
+import { calculatePrice, calculateSize, GyeongbukLocationToNumber, GyeonggiLocationToNumber, SeoulLocationToNumber } from '../types/types';
 
 interface HouseData {
     deposit: string;
