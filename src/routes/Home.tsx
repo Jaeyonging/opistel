@@ -13,11 +13,9 @@ export const Home = () => {
   return (
     <>
       <div className='flex w-[100vw] flex-col'>
-        <Menu></Menu>
         <TodayTradeCard />
       </div>
       <ToTop />
-      <Footer></Footer>
     </>
   )
 }

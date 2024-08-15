@@ -2,6 +2,9 @@ import { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Home } from "./routes/Home";
 import { Auction } from "./routes/Auction";
+import { Menu } from '../src/components/Menu'
+import { Footer } from '../src/components/Footer'
+
 import './App.css'
 import ReactGA from 'react-ga4';
 
@@ -18,6 +21,7 @@ function App() {
 
   return (
     <>
+      <Menu></Menu>
       < Suspense fallback={< div > 로딩중</div >}>
         <Routes>
           <Route path="/" element={<Home></Home>} />
@@ -27,6 +31,8 @@ function App() {
           <Route path="/cart" element={<Home></Home>} />
         </Routes>
       </Suspense >
+      <Footer></Footer>
+
     </>
   );
 }

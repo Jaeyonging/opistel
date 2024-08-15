@@ -7,7 +7,6 @@ export const Auction = () => {
     return (
         <>
             <div className='flex w-[100vw] flex-col'>
-                <Menu></Menu>
             </div>
         </>)
 }
