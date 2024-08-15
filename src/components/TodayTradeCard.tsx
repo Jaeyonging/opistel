@@ -103,8 +103,7 @@ export const TodayTradeCard = () => {
     return (
         <div className='flex flex-col bg-[#f9f9f9] text-[20px] text-center'>
             이번 {today.getMonth() + 1}월 달의 실거래
-            <div>시 선택</div>
-            <div className='flex justify-center my-4'>
+            <div className='flex justify-center my-4 overflow-auto'>
                 {renderRegionButtons()}
             </div>
             <div className='flex flex-row flex-wrap'>
