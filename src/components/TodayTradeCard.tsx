@@ -78,11 +78,11 @@ export const TodayTradeCard = () => {
 
     const locationList = getLocationList(selectedRegion);
 
-    const filteredHouseData = houseData.filter(item =>
+    const filteredHouseData = Array.isArray(houseData) ? houseData.filter(item =>
         `${item.umdNm} ${item.jibun} ${item.offiNm}오피스텔 ${item.floor}층`
             .toLowerCase()
             .includes(searchQuery.toLowerCase())
-    );
+    ) : [];
 
     const renderRegionButtons = () => {
         const regions = ["서울", "경기", "부산", "대구", "인천", "광주", "대전", "울산", "강원", "세종", "충북", "충남", "전북", "전남", "경북", "경남", "제주"];
