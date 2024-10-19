@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      {/* <Menu /> */}
+      <Menu />
       < Suspense fallback={< div > 로딩중</div >}>
         <Routes>
           <Route path="/" element={<Home></Home>} />
