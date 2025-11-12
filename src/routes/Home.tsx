@@ -5,7 +5,7 @@ import { ToTop } from '../components/ToTop'
 export const Home = () => {
   return (
     <>
-      <div className='flex w-[100vw] flex-col'>
+      <div className='flex w-full flex-col overflow-x-hidden'>
         <TodayTradeCard />
       </div>
       <ToTop />

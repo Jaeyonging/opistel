@@ -8,11 +8,11 @@ export const ToTop = () => {
     return (
         <button
             onClick={scrollToTop}
-            className='fixed bottom-8 right-8 z-40 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 group'
+            className='fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-40 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-3 sm:p-4 rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 active:scale-95 group'
             aria-label="맨 위로 이동"
         >
             <svg 
-                className="w-6 h-6 transform group-hover:-translate-y-1 transition-transform" 
+                className="w-5 h-5 sm:w-6 sm:h-6 transform group-hover:-translate-y-1 transition-transform" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
