@@ -21,8 +21,14 @@ function App() {
 
   return (
     <>
-      <Menu />
-      < Suspense fallback={< div > 로딩중</div >}>
+      <Suspense fallback={
+        <div className='flex justify-center items-center min-h-screen'>
+          <div className='text-center'>
+            <div className='inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600 mb-4'></div>
+            <p className='text-gray-600 text-xl font-semibold'>로딩 중...</p>
+          </div>
+        </div>
+      }>
         <Routes>
           <Route path="/" element={<Home></Home>} />
           <Route path="/home" element={<Home></Home>} />
