@@ -42,16 +42,36 @@ const Home = () => {
       <ToTop />
 
       {selectedType === "오피스텔" && (
-        <OpistelContainer currCityNumber={currCityNumber} selectedYear={selectedYear} selectedMonth={selectedMonth} />
+        <OpistelContainer
+          currCityNumber={currCityNumber}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          searchQuery={searchQuery}
+        />
       )}
       {selectedType === "아파트" && (
-        <ApartmentContainer currCityNumber={currCityNumber} selectedYear={selectedYear} selectedMonth={selectedMonth} />
+        <ApartmentContainer
+          currCityNumber={currCityNumber}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          searchQuery={searchQuery}
+        />
       )}
       {selectedType === "연립다세대" && (
-        <RowHouseContainer currCityNumber={currCityNumber} selectedYear={selectedYear} selectedMonth={selectedMonth} />
+        <RowHouseContainer
+          currCityNumber={currCityNumber}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          searchQuery={searchQuery}
+        />
       )}
       {selectedType === "단독다가구주택" && (
-        <SingleHouseContainer currCityNumber={currCityNumber} selectedYear={selectedYear} selectedMonth={selectedMonth} />
+        <SingleHouseContainer
+          currCityNumber={currCityNumber}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          searchQuery={searchQuery}
+        />
       )}
     </>
   );

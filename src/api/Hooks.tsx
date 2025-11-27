@@ -23,17 +23,40 @@ const buildPayload = (data: any) => {
     };
 };
 
-const FetchOpistelData = ({ children, page, code, date }: { children: React.ReactNode, page: number, code: string, date: string }) => {
+const fetchAllPages = async (fetchPage: (page: number) => Promise<any>) => {
+    const firstPageData = await fetchPage(1);
+    const aggregated = buildPayload(firstPageData);
+    const totalPages = Math.max(1, Math.ceil(aggregated.totalCount / aggregated.numOfRows));
+
+    if (totalPages === 1) {
+        aggregated.totalCount = aggregated.items.length;
+        return aggregated;
+    }
+
+    const remainingResponses = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, idx) => fetchPage(idx + 2))
+    );
+
+    remainingResponses.forEach((pageData) => {
+        const pagePayload = buildPayload(pageData);
+        aggregated.items.push(...pagePayload.items);
+    });
+
+    aggregated.totalCount = aggregated.items.length;
+    return aggregated;
+};
+
+const FetchOpistelData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
     const { data, isLoading, isError, error } = useQuery(
-        ["GetOpistelData", page, code, date],
-        () => GetOpistelData(page, code, date),
+        ["GetOpistelData", code, date],
+        () => fetchAllPages((page) => GetOpistelData(page, code, date)),
         { keepPreviousData: true }
     );
     const { setData, resetData } = useDataStore();
 
     useEffect(() => {
         if (data) {
-            setData(buildPayload(data));
+            setData(data);
         }
         return () => {
             resetData();
@@ -46,17 +69,17 @@ const FetchOpistelData = ({ children, page, code, date }: { children: React.Reac
     return <>{data && <>{children}</>}</>;
 }
 
-const FetchApartmentData = ({ children, page, code, date }: { children: React.ReactNode, page: number, code: string, date: string }) => {
+const FetchApartmentData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
     const { data, isLoading, isError, error } = useQuery(
-        ["GetApartmentData", page, code, date],
-        () => GetApartmentData(page, code, date),
+        ["GetApartmentData", code, date],
+        () => fetchAllPages((page) => GetApartmentData(page, code, date)),
         { keepPreviousData: true }
     );
     const { setData, resetData } = useDataStore();
 
     useEffect(() => {
         if (data) {
-            setData(buildPayload(data));
+            setData(data);
         }
         return () => {
             resetData();
@@ -69,17 +92,17 @@ const FetchApartmentData = ({ children, page, code, date }: { children: React.Re
     return <>{data && <>{children}</>}</>;
 }
 
-const FetchRowHouseData = ({ children, page, code, date }: { children: React.ReactNode, page: number, code: string, date: string }) => {
+const FetchRowHouseData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
     const { data, isLoading, isError, error } = useQuery(
-        ["GetRowHouseData", page, code, date],
-        () => GetRowHouseData(page, code, date),
+        ["GetRowHouseData", code, date],
+        () => fetchAllPages((page) => GetRowHouseData(page, code, date)),
         { keepPreviousData: true }
     );
     const { setData, resetData } = useDataStore();
 
     useEffect(() => {
         if (data) {
-            setData(buildPayload(data));
+            setData(data);
         }
         return () => {
             resetData();
@@ -93,17 +116,17 @@ const FetchRowHouseData = ({ children, page, code, date }: { children: React.Rea
 }
 
 
-const FetchSingleHouseData = ({ children, page, code, date }: { children: React.ReactNode, page: number, code: string, date: string }) => {
+const FetchSingleHouseData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
     const { data, isLoading, isError, error } = useQuery(
-        ["GetSingleHouseData", page, code, date],
-        () => GetSingleHouseData(page, code, date),
+        ["GetSingleHouseData", code, date],
+        () => fetchAllPages((page) => GetSingleHouseData(page, code, date)),
         { keepPreviousData: true }
     );
     const { setData, resetData } = useDataStore();
 
     useEffect(() => {
         if (data) {
-            setData(buildPayload(data));
+            setData(data);
         }
         return () => {
             resetData();

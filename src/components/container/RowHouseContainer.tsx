@@ -1,43 +1,62 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import ApiErrorBoundary from '../../boundary/ApiErrorBoundary'
 import { FetchRowHouseData } from '../../api/Hooks'
 import RowHouseCard from '../card/RowHouseCard';
 import { useDataStore } from '../../store/data';
 import Pagination from '../common/Pagination';
+import { filterBySearchQuery } from '../../utils/search';
 
 interface Props {
     currCityNumber: string;
     selectedYear: number;
     selectedMonth: number;
+    searchQuery: string;
 }
 
-const RowHouseContainer = ({ currCityNumber, selectedYear, selectedMonth }: Props) => {
-    const { newdata, totalCount, numOfRows } = useDataStore();
+const RowHouseContainer = ({ currCityNumber, selectedYear, selectedMonth, searchQuery }: Props) => {
+    const { newdata, numOfRows } = useDataStore();
     const [page, setPage] = useState(1);
     const listRef = useRef<HTMLDivElement | null>(null);
     const formattedDate = `${selectedYear}${selectedMonth.toString().padStart(2, '0')}`;
-    const safePageSize = Math.max(1, numOfRows);
-    const totalPages = totalCount > 0 ? Math.ceil(totalCount / safePageSize) : 1;
+    const pageSize = Math.max(1, numOfRows);
+
+    const filteredData = useMemo(
+        () => filterBySearchQuery(newdata, searchQuery),
+        [newdata, searchQuery]
+    );
+
+    const totalPages = Math.max(1, Math.ceil(filteredData.length / pageSize));
+    const currentPage = Math.min(page, totalPages);
+    const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
 
     useEffect(() => {
         setPage(1);
-    }, [currCityNumber, selectedYear, selectedMonth]);
+    }, [currCityNumber, selectedYear, selectedMonth, searchQuery]);
+
+    useEffect(() => {
+        setPage((prev) => Math.min(prev, totalPages));
+    }, [totalPages]);
 
     const handlePageChange = (nextPage: number) => {
-        setPage(nextPage);
+        const clampedPage = Math.min(Math.max(nextPage, 1), totalPages);
+        if (clampedPage === page) return;
+        setPage(clampedPage);
         listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
         <>
             <ApiErrorBoundary>
-                <FetchRowHouseData page={page} code={currCityNumber} date={formattedDate}>
+                <FetchRowHouseData code={currCityNumber} date={formattedDate}>
                     <div ref={listRef} className='flex flex-col gap-2'>
-                        {newdata && newdata.map((item: any, index: number) => (
-                            <RowHouseCard key={index} data={item} />
+                        {paginatedData.map((item: any, index: number) => (
+                            <RowHouseCard key={`${item?.rletNo || item?.mhouseNm || index}-${index}`} data={item} />
                         ))}
                     </div>
-                    <Pagination page={page} setPage={handlePageChange} totalPages={totalPages} />
+                    <Pagination page={currentPage} setPage={handlePageChange} totalPages={totalPages} />
                 </FetchRowHouseData>
             </ApiErrorBoundary>
         </>
