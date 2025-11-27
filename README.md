@@ -1,99 +1,114 @@
-# 🏢 전국 오피스텔 시세 확인 서비스
+# 🏢 전국 주거시설 실거래가 조회 서비스
 
-전국 지역의 오피스텔 실거래가를 쉽고 빠르게 확인할 수 있는 웹 애플리케이션입니다.
-
-## 🎯 소개
-
-이 프로젝트는 국토교통부의 공공데이터 API를 활용하여 전국 17개 시도(서울, 경기, 부산, 대구, 인천, 광주, 대전, 울산, 강원, 세종, 충북, 충남, 전북, 전남, 경북, 경남, 제주)의 오피스텔 실거래 정보를 제공합니다.
-
-사용자는 지역, 연도, 월을 선택하여 원하는 기간의 오피스텔 거래 내역을 확인할 수 있으며, 주소나 오피스텔명으로 검색도 가능합니다.
+전국의 오피스텔, 아파트, 연립/다세대, 단독/다가구 실거래가를 한 번에 확인할 수 있는 React 기반 웹 애플리케이션입니다. 날짜, 지역, 유형 필터를 조합하면 원하는 조건의 거래 데이터를 즉시 받아볼 수 있고, 페이지네이션으로 많은 결과도 매끄럽게 탐색할 수 있습니다.
 
 **배포 URL**: [https://opistel.vercel.app/](https://opistel.vercel.app/)
 
+---
+
+- **React Query + Axios 재구성**  
+  - 지역/기간/페이지 조합이 바뀔 때마다 자동으로 캐시 키를 갱신하도록 `useQuery` 키를 정비했습니다.  
+  - API 응답의 `totalCount`, `numOfRows`를 함께 보존해 페이지네이션이 정확하게 작동하도록 했습니다.
+
+- **Zustand 전역 상태 정비**  
+  - 카드 리스트뿐 아니라 전체 건수·페이지 크기를 한 번에 보관하고, 필터가 변경될 때마다 안전하게 리셋되도록 스토어를 단순화했습니다.
+
+- **페이지네이션 UX 향상**  
+  - 이전/다음 페이지 이동 시 카드 목록 상단으로 스크롤이 이동하도록 처리해 새 데이터를 즉시 확인할 수 있습니다.
+  - 상태가 없거나 마지막 페이지에 도달하면 버튼을 비활성화해 사용성이 좋아졌습니다.
+
+- **Fetch 컨테이너 공통화**  
+  - 여러 주거 유형에서 재사용할 수 있도록 컨테이너 패턴을 정리했고, 월 포맷팅(`01`, `02` …)도 통일했습니다.
+
+---
+
 ## ✨ 주요 기능
 
-- 🗺️ **전국 지역 검색**: 17개 시도의 오피스텔 실거래 정보 조회
-- 📅 **기간별 조회**: 연도 및 월을 선택하여 특정 기간의 거래 내역 확인
-- 🔍 **검색 기능**: 주소, 지번, 오피스텔명으로 빠른 검색
-- 📊 **상세 정보 제공**: 
-  - 보증금 및 월세 정보
-  - 전용면적(평수)
-  - 거래일자
-  - 건축년도
-  - 이전 거래 정보
-  - 거래기간
-- 📱 **반응형 디자인**: 모바일, 태블릿, 데스크톱 모든 기기에서 최적화된 UI
-- 🎨 **현대적인 UI**: Tailwind CSS를 활용한 깔끔하고 직관적인 인터페이스
+- **지역 & 상세 지역 선택**: 17개 시도 + 시군구 단위 상세 지역까지 선택 가능  
+- **연·월 필터링**: 원하는 기간의 실거래 데이터를 즉시 조회  
+- **유형 스위칭**: 오피스텔 / 아파트 / 연립다세대 / 단독다가구 간 손쉬운 전환  
+- **검색창**: 주소나 건물명으로 빠르게 필터링 (프론트 검색)  
+- **페이지네이션**: API에서 내려준 총 건수 기반으로 정확한 페이지 계산  
+- **반응형 UI**: Tailwind CSS로 모바일부터 데스크톱까지 일관된 경험  
+- **GA4 연동**: 페이지 이동 시 Google Analytics 이벤트 전송
+
+---
 
 ## 🛠️ 기술 스택
 
-### Frontend
-- **React 18.2.0** - UI 라이브러리
-- **TypeScript 4.9.3** - 타입 안정성
-- **Vite 4.1.0** - 빌드 도구 및 개발 서버
-- **React Router DOM 6.22.3** - 라우팅
-- **Redux Toolkit 2.2.1** - 상태 관리
-- **Axios 1.6.8** - HTTP 클라이언트
+| 영역 | 사용 기술 |
+|------|-----------|
+| 언어 & 런타임 | React 18, TypeScript 4.9, Vite 4 |
+| 상태 관리 | React Query 3, Zustand 5 |
+| 네트워크 | Axios 1.6 |
+| 스타일링 | Tailwind CSS 3 |
+| 기타 | React Router DOM 6, React GA4, Lottie |
+| 배포 | Vercel |
 
-### Styling
-- **Tailwind CSS 3.4.3** - 유틸리티 기반 CSS 프레임워크
-- **Bootstrap 5.2.3** - 추가 UI 컴포넌트
-
-### Analytics
-- **React GA4 2.1.0** - Google Analytics 통합
-
-### 배포
-- **Vercel** - 호스팅 및 배포
-
+---
 
 ## 📁 프로젝트 구조
 
 ```
 opistel/
-├── public/                 # 정적 파일
+├── public/
 ├── src/
-│   ├── api/               # API 호출 함수
-│   │   └── index.ts
-│   ├── components/        # React 컴포넌트
-│   │   ├── Footer.tsx
-│   │   ├── LocationButton.tsx
-│   │   ├── LocationCard.tsx
-│   │   ├── Menu.tsx
-│   │   ├── TodayTradeCard.tsx
-│   │   └── ToTop.tsx
-│   ├── routes/            # 페이지 컴포넌트
-│   │   ├── Home.tsx
-│   │   └── Auction.tsx
-│   ├── store/             # Redux store 설정
-│   │   ├── cartSlice.ts
-│   │   ├── configureStore.ts
-│   │   └── userSlice.ts
-│   ├── types/             # TypeScript 타입 정의
-│   │   └── types.ts
-│   ├── App.tsx            # 메인 App 컴포넌트
-│   ├── App.css
-│   └── main.tsx           # 진입점
-├── index.html
+│   ├── api/               # API 모듈 (Axios + React Query)
+│   ├── boundary/          # 에러 바운더리
+│   ├── components/
+│   │   ├── button/
+│   │   ├── card/
+│   │   ├── common/        # Footer, Pagination, SearchInput 등
+│   │   ├── container/     # 주거유형별 리스트 컨테이너
+│   │   └── picker/        # Type/Date/Region/Location 선택 컴포넌트
+│   ├── lotties/
+│   ├── routes/            # 페이지 (Home)
+│   ├── store/             # Zustand 상태
+│   ├── types/
+│   ├── App.tsx
+│   └── main.tsx
 ├── package.json
-├── vite.config.ts         # Vite 설정
-├── tailwind.config.js    # Tailwind CSS 설정
-├── tsconfig.json         # TypeScript 설정
-└── vercel.json           # Vercel 배포 설정
+├── tailwind.config.js
+├── tsconfig.json
+└── vite.config.ts
 ```
 
-## 🔐 환경 변수 설정
+---
 
-프로젝트를 실행하기 위해 다음 환경 변수가 필요합니다:
+## ⚙️ 실행 방법
 
-| 변수명 | 설명 | 필수 여부 |
-|--------|------|----------|
-| `VITE_SERVICE_KEY` | 공공데이터포털 API 서비스 키 | ✅ 필수 |
-| `VITE_GA_PROPERTYID` | Google Analytics 속성 ID | ⚠️ 선택 |
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버
+npm run dev
+
+# 타입 체크 + 프로덕션 빌드
+npm run build
+
+# 빌드 결과 미리보기
+npm run preview
+```
+
+브라우저에서 `http://localhost:5173`으로 접근하면 개발 서버를 확인할 수 있습니다.
+
+---
+
+## 🧠 리팩토링하면서 느낀 점 & 배운 점
+
+- **데이터 정규화의 중요성**  
+  - 공공데이터 API는 단일 객체/배열을 혼재해서 보내기 때문에, 응답을 항상 배열로 정규화하는 헬퍼를 만들고자 React Query 캐시와 Zustand 스토어가 훨씬 안정적으로 동작했습니다.
+
+- **쿼리 키 설계가 곧 UX**  
+  - `["GetOpistelData", page, code, date]`처럼 파라미터를 정확히 키에 반영하니 지역,기간을 바꿔도 이전 데이터가 섞이지 않고 즉각적으로 갱신되었습니다. 네트워크 캐시 로직을 잘 설계하면 사용자 경험도 동시에 좋아집니다.
+
+- **전역 상태는 작고 명확하게**  
+  - 기존에는 카드 데이터만 저장했지만, `totalCount`나 `numOfRows` 등 페이지네이션에 필요한 정보까지 한 번에 저장하니 컨테이너 컴포넌트가 단순해졌습니다. 필요 이상의 글로벌 스토어를 만들지 않는 것이 리팩토링의 핵심이라는 걸 다시 느꼈습니다.
+
+- **작은 UX 디테일이 만족도를 올린다**  
+  - 페이지 이동 시 카드 리스트 상단으로 스크롤이 이동하도록 만들었더니, 실제 사용감이 훨씬 자연스러워졌습니다. 기능 구현만큼이나 인터랙션을 다듬는 과정이 중요합니다.
+
+이번 리팩토링을 통해 데이터 흐름을 다시 설계하는 작업이 얼마나 많은 버그를 예방하고, 팀원(그리고 미래의 나)이 이해하기 쉬운 코드를 만드는지 체감했습니다. 앞으로도 "데이터가 어떻게 들어와서 나가는가"를 먼저 설계한 뒤 화면을 붙이는 습관을 계속 유지하려고 합니다.
 
 
-## 👤 작성자
-
-**jaeyonging**
-
-- GitHub: [@jaeyonging](https://github.com/jaeyonging)
-- 배포 URL: [https://opistel.vercel.app/](https://opistel.vercel.app/)

@@ -1,12 +1,3 @@
-export interface QTest {
-    question: string
-    answer01: string
-    answer02: string
-    answer03: string
-    ansewr04: string
-    answer05: string
-}
-
 export const calculateSize = (size: number) => {
     if (typeof size !== 'number' || isNaN(size)) {
         return 'Invalid size';
@@ -34,6 +25,29 @@ export const calculatePrice = (price: string | number) => {
     }
     return Math.floor(num) + "억" + (num2 > 0 ? num2 + "만원" : "");
 }
+
+export const getLocationList = (region: string) => {
+    switch (region) {
+        case "서울": return SeoulLocationToNumber;
+        case "경기": return GyeonggiLocationToNumber;
+        case "부산": return BusanLocationToNumber;
+        case "대구": return DaeguLocationToNumber;
+        case "인천": return IncheonLocationToNumber;
+        case "광주": return GwangjuLocationToNumber;
+        case "대전": return DaejeonLocationToNumber;
+        case "울산": return UlsanLocationToNumber;
+        case "강원": return GangwonLocationToNumber;
+        case "세종": return SejongLocationToNumber;
+        case "충북": return ChungbukLocationToNumber;
+        case "충남": return ChungnamLocationToNumber;
+        case "전북": return JeonbukLocationToNumber;
+        case "전남": return JeonnamLocationToNumber;
+        case "경북": return GyeongbukLocationToNumber;
+        case "경남": return GyeongnamLocationToNumber;
+        case "제주": return JejuLocationToNumber;
+        default: return SeoulLocationToNumber;
+    }
+};
 
 export const SeoulLocationToNumber: [string, string][] = [ //서울
     ["강남구", "11680"],
