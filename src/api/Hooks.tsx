@@ -47,7 +47,7 @@ const fetchAllPages = async (fetchPage: (page: number) => Promise<any>) => {
 };
 
 const FetchOpistelData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
-    const { data, isLoading, isError, error } = useQuery(
+    const { data, isLoading, isFetching, isError, error } = useQuery(
         ["GetOpistelData", code, date],
         () => fetchAllPages((page) => GetOpistelData(page, code, date)),
         { keepPreviousData: true }
@@ -63,14 +63,14 @@ const FetchOpistelData = ({ children, code, date }: { children: React.ReactNode,
         };
     }, [data, setData, resetData]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading || isFetching) return <Loading />;
     if (isError) throw error;
 
     return <>{data && <>{children}</>}</>;
 }
 
 const FetchApartmentData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
-    const { data, isLoading, isError, error } = useQuery(
+    const { data, isLoading, isFetching, isError, error } = useQuery(
         ["GetApartmentData", code, date],
         () => fetchAllPages((page) => GetApartmentData(page, code, date)),
         { keepPreviousData: true }
@@ -86,14 +86,14 @@ const FetchApartmentData = ({ children, code, date }: { children: React.ReactNod
         };
     }, [data, setData, resetData]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading || isFetching) return <Loading />;
     if (isError) throw error;
 
     return <>{data && <>{children}</>}</>;
 }
 
 const FetchRowHouseData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
-    const { data, isLoading, isError, error } = useQuery(
+    const { data, isLoading, isFetching, isError, error } = useQuery(
         ["GetRowHouseData", code, date],
         () => fetchAllPages((page) => GetRowHouseData(page, code, date)),
         { keepPreviousData: true }
@@ -109,7 +109,7 @@ const FetchRowHouseData = ({ children, code, date }: { children: React.ReactNode
         };
     }, [data, setData, resetData]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading || isFetching) return <Loading />;
     if (isError) throw error;
 
     return <>{data && <>{children}</>}</>;
@@ -117,7 +117,7 @@ const FetchRowHouseData = ({ children, code, date }: { children: React.ReactNode
 
 
 const FetchSingleHouseData = ({ children, code, date }: { children: React.ReactNode, code: string, date: string }) => {
-    const { data, isLoading, isError, error } = useQuery(
+    const { data, isLoading, isFetching, isError, error } = useQuery(
         ["GetSingleHouseData", code, date],
         () => fetchAllPages((page) => GetSingleHouseData(page, code, date)),
         { keepPreviousData: true }
@@ -133,7 +133,7 @@ const FetchSingleHouseData = ({ children, code, date }: { children: React.ReactN
         };
     }, [data, setData, resetData]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading || isFetching) return <Loading />;
     if (isError) throw error;
 
     return <>{data && <>{children}</>}</>;
