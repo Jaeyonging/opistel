@@ -20,8 +20,12 @@ const ApartmentCard = ({ data }: Props) => {
         estateAgentSggNm
     } = data;
 
+    const clickAddress = (umdNm: string, aptNm: string) => {
+        window.open(`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${umdNm} ${aptNm}&ackey=qcs716nm`, '_blank');
+    }
+
     return (
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-all">
+        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:scale-[1.01] transition-all duration-300 cursor-pointer" onClick={() => clickAddress(umdNm, aptNm)}>
             <div className="text-xl font-bold text-gray-800 mb-1">
                 {aptNm}
             </div>

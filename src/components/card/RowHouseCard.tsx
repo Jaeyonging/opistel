@@ -24,8 +24,12 @@ const RowHouseCard = ({ data }: Props) => {
 
     const isJeonse = monthlyRent === 0;
 
+    const clickAddress = (umdNm: string, mhouseNm: string) => {
+        window.open(`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${umdNm} ${mhouseNm}&ackey=qcs716nm`, '_blank');
+    }
+
     return (
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-all">
+        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:scale-[1.01] transition-all duration-300 cursor-pointer" onClick={() => clickAddress(umdNm, mhouseNm)}>
 
             {/* 이름 */}
             <div className="text-lg font-bold text-gray-900 mb-1">

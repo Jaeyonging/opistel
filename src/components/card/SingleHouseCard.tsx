@@ -6,6 +6,7 @@ interface Props {
 }
 
 const SingleHouseCard = ({ data }: Props) => {
+    console.log(data);
     const {
         buildYear,
         contractTerm,
@@ -14,16 +15,16 @@ const SingleHouseCard = ({ data }: Props) => {
         dealMonth,
         dealDay,
         deposit,
-        houseType,     
+        houseType,
         monthlyRent,
-        totalFloorAr,  
+        totalFloorAr,
         umdNm,
     } = data;
 
     const isJeonse = monthlyRent === 0;
 
     return (
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-all">
+        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:scale-[1.01] transition-all duration-300 cursor-pointer">
 
             {/* 상단: 단독/다가구 */}
             <div className="flex items-center gap-2 mb-2">

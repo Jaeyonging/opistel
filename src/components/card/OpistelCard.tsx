@@ -20,8 +20,11 @@ const OpistelCard = ({ data }: Props) => {
         buildYear
     } = data;
 
+    const clickAddress = (sggNm: string, offiNm: string) => {
+        window.open(`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${sggNm} ${offiNm}&ackey=qcs716nm`, '_blank');
+    }
     return (
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-all">
+        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm cursor-pointer hover:scale-[1.01] transition-all duration-300" onClick={() => clickAddress(sggNm, offiNm)}>
 
             <div className="text-lg font-bold text-gray-800 mb-1">
                 {offiNm}
