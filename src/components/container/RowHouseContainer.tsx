@@ -51,12 +51,20 @@ const RowHouseContainer = ({ currCityNumber, selectedYear, selectedMonth, search
         <>
             <ApiErrorBoundary>
                 <FetchRowHouseData code={currCityNumber} date={formattedDate}>
-                    <div ref={listRef} className='flex flex-col gap-2'>
-                        {paginatedData.map((item: any, index: number) => (
-                            <RowHouseCard key={`${item?.rletNo || item?.mhouseNm || index}-${index}`} data={item} />
-                        ))}
-                    </div>
-                    <Pagination page={currentPage} setPage={handlePageChange} totalPages={totalPages} />
+                    {filteredData.length === 0 ? (
+                        <div className='text-center py-12 text-gray-600 text-lg'>
+                            {selectedMonth}월에 대한 정보가 없습니다
+                        </div>
+                    ) : (
+                        <>
+                            <div ref={listRef} className='flex flex-col gap-2'>
+                                {paginatedData.map((item: any, index: number) => (
+                                    <RowHouseCard key={`${item?.rletNo || item?.mhouseNm || index}-${index}`} data={item} />
+                                ))}
+                            </div>
+                            <Pagination page={currentPage} setPage={handlePageChange} totalPages={totalPages} />
+                        </>
+                    )}
                 </FetchRowHouseData>
             </ApiErrorBoundary>
         </>
